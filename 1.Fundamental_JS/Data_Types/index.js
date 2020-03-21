@@ -56,3 +56,10 @@ console.log([21, 'adas', true]);
  * https://learn.javascript.ru/types-intro
  * https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures
 * */
+
+function ZeroError(n, m) {
+    const res = n / m;
+    if(res === Infinity) {
+        return 'Error, you can not divide by 0!'
+    }
+}
