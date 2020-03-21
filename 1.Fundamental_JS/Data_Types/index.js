@@ -51,3 +51,8 @@ console.log([21, 'adas', true]);
  * 3. Нам не нужно определять тип данных при создании переменных
  * 4. Если мы хотим использовать статическую типизацию мы можем использовать TypeScript или Flow
  */
+
+/** Must read:
+ * https://learn.javascript.ru/types-intro
+ * https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures
+* */
