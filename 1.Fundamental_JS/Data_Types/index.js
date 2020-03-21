@@ -1,6 +1,6 @@
 /*Типы данных*/
 
-/* 1.Примитивные типы данных:
+/** 1.Примитивные типы данных:
 *
 *  - Number: 1, 1.3, NaN, Infinity
 * - String: 'Bla', "Bla", `Bla`
@@ -33,7 +33,7 @@ console.log(undefined); // Переменная без присвоеного з
 // Symbol
 console.log(Symbol());
 
-/* 2. Объекты (Reference type), Передаются по ссылке:
+/** 2. Объекты (Reference type), Передаются по ссылке:
 *
 * - Object:{ name:  'Vitalik' }
 *   * Array: [1, 'sfdwf', true];
