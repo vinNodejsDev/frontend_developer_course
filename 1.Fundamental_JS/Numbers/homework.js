@@ -21,3 +21,6 @@ const value = (0.6 * 10 + 0.7 * 10) / 10;
 const cashValue = parseInt('100$');
 
 console.log(cashValue);
+
+let чувак = "шцц прикурить не будет?";
+console.log(чувак);
