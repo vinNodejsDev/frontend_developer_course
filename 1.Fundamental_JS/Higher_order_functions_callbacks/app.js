@@ -1,67 +1,105 @@
-function sayHi(firstName='Ivan', lastName='Ivanow') {
-    firstName = firstName.toUpperCase();
-    lastName = lastName.toUpperCase();
-    // console.log(`Hi there ${firstName} ${lastName}!`);
-    return `Hi there ${firstName} ${lastName}!`;
-}
-
-// sayHi('vitalik', 'kushnir');
-// let res = sayHi('vitalik', 'kushnir');
-// let res2 = sayHi()
-// console.log(res2);
-
-// let x = 10;
-//
-// function foo(x) { // Задавая параметры в аргументах мы также объявляем этим локальные переменные
-//     // let x = 20; не изменит глобальную переменную
-//     x = 20; // изменит глобальную переменную
-//     console.log(x);
+// function foo() {
+//     console.log('hello world')
 // }
 //
 // foo();
-// console.log(x)
-
-// const user = {
-//     name: 'Vitalii',
-//     age: 25
-// };
 //
-// function getObj(obj) {
-//     console.log(obj);
-//     obj.name = 'Star';
+// //Данный код позволяет понять что функция это объект
+// foo.field = 'field';
+// console.log(foo.field)
+
+// const arr = ['Ivan', 'Petro', 'Vitalik', 'Alex'];
+// // [element.length of arr]
+// let newArr = [];
+// for(let i = 0; i < arr.length; i++) {
+//     newArr.push(arr[i].length);
 // }
+// console.log(newArr);
 //
-// getObj(user);
-// getObj(user);
+// let newArr2 = [];
+// for(let i = 0; i < arr.length; i++) {
+//     newArr2.push(arr[i].toUpperCase());
+// }
+// console.log(newArr2);
 
-// FE
-// const  square = function (x) {
-//     return x * x;
-// };
-//
-// console.log(square(43));
+// map
+const names = ['Ivan', 'Petro', 'Vitalik', 'Alex'];
 
-//IIF
-// (function (msg) {
-//     console.log('I am IIF', msg)
-// })('parameter');
-
-
-
-function multiply(...args) {
-    if(!args) {
-        return 0;
-    } else {
-        let arr = [...args];
-        console.log(arr);
-        let res = 1;
-        for (let i = 0; i < arr.length; i++) {
-            res *= arr[i];
-        }
-        return res;
+function mapArray(arr, fn) {
+    const res = [];
+    for (let i = 0; i < arr.length; i++) {
+        res.push(fn(arr[i]))
     }
-
+    return res;
 }
 
-console.log(multiply(2, 4, 5, 6));
-// multiply();
+function nameLength(item ) {
+    console.log(item);
+    return item.length;
+}
+
+function nameToUpperCase(item) {
+    return item.toUpperCase();
+}
+
+
+
+const result = mapArray(names, nameLength);
+const result2 = mapArray(names, nameToUpperCase);
+// console.log(result);
+// console.log(result2);
+
+function greeting(firstName) {
+    return function (lastName) {
+        return `Hello ${firstName} ${lastName }`
+    }
+}
+
+// const testGreet = greeting('Stepan');
+// const fullName = testGreet('Petrov');
+const fullName = greeting('Ivan')('Ivanov');
+
+// console.log(fullName);
+
+function question(job) {
+    const jobDictionary = {
+        developer: 'что такое JavaScript?',
+        teacher: 'какому предмету вы обучаете студентов?'
+    };
+    // if(job === 'developer') {
+    //     return function (name) {
+    //         return `${name}, что такое JavaScript?`
+    //     }
+    // } else if (job === 'teacher') {
+    //     return function (name) {
+    //         return `${name}, какому предмету вы обучаете студентов?`
+    //     }
+    // }
+
+    //simplified
+    return function (name) {
+        return `${name}, ${jobDictionary[job]}`
+    }
+}
+
+const developerQuestion = question('developer');
+console.log(developerQuestion('Vitalii'));
+
+const teacherQuestion = question('teacher');
+console.log(teacherQuestion('Vitalii'));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
