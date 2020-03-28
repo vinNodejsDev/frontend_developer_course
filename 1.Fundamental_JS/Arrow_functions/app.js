@@ -40,4 +40,4 @@ const obj = {
 };
 
 // obj.getFirstName();
-obj.getAge();
+// obj.getAge();
