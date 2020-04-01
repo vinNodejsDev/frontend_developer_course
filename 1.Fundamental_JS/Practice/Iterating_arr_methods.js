@@ -45,7 +45,7 @@ function formString(arr) {
     const sortedArr = arr.sort((prev, next) => prev.index - next.index);
     console.log(sortedArr);
     const sentence = sortedArr.reduce((arr, letterObj)=> {
-        arr.push(letterObj.char)
+        arr.push(letterObj.char);
         return arr;
     },[]).join('');
     return sentence;
