@@ -9,3 +9,6 @@ btnGen.addEventListener("click", e => {
    li.innerText = `Item ${ul.children.length+1}`;
    ul.appendChild(li);
 });
+
+document.querySelector('div')
+document.body.removeChild(document.querySelector('div'));
