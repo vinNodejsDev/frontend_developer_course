@@ -5,5 +5,5 @@ const btn = document.querySelector('#btn-msg');
 
 btn.addEventListener("click", e => {
     const message = btn.getAttribute('data-text');
-    console.log(message);
+    alert(message);
 });
