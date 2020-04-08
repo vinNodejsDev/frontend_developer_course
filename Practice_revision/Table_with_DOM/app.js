@@ -121,7 +121,7 @@ function initTable(tableSchema, items) {
     const header = generateThead(tableSchema);
 
     // 3. Add body of the table
-    const body = generateBody(tableSchema, users);
+    let body = generateBody(tableSchema, users);
 
     // 4. Add total balance
     const total = generateTotalBalance(tableSchema, items);
@@ -134,3 +134,42 @@ function initTable(tableSchema, items) {
 }
 
 initTable(tableSchema, users);
+
+// 5. Sort button
+const button = document.querySelector('.btn');
+
+// Event listener to Sort button
+button.addEventListener("click", onClickButton);
+
+function onClickButton(e) {
+    // table.replaceChild(generateBody(tableSchema, sortItems(users)), body);
+
+    // if(e.target.classList.toggle('toLow')) {
+    //
+    // }
+    if (!Array.from(e.target.classList).includes('toLow')) {
+        changeContent(true);
+        e.target.classList.toggle('toLow');
+        return;
+    }
+    changeContent();
+    e.target.classList.toggle('toLow');
+}
+
+function changeContent(toLowest=false) {
+    const table = document.querySelector('table');
+    const tbody = document.querySelector('tbody');
+    const itemsSorted = sortItems(users, toLowest);
+    const newTbody = generateBody(tableSchema, itemsSorted);
+
+    table.replaceChild(newTbody, tbody);
+    return 'Sorted!'
+}
+
+function sortItems(items, toLowest=false) {
+    let sign = 1;
+    if(toLowest) {
+        sign = -1;
+    }
+    return items.sort((prev, next) => sign*prev.balance - sign*next.balance);
+}
