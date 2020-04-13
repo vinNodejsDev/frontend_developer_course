@@ -273,6 +273,7 @@ const tasks = [
             const updatedTask = listItemTemplate(objOfTasks[id]);
             listContainer.replaceChild(updatedTask, parent);
             form.reset();
+            saveBtn.innerText = "Add Task"
         });
     }
 
