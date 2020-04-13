@@ -255,7 +255,6 @@ const tasks = [
             const parent = e.target.closest('[data-task-id]');
             const id = parent.dataset.taskId;
             editTask(id, parent);
-
         }
     }
 
@@ -273,6 +272,7 @@ const tasks = [
             objOfTasks[id]['body'] = inputBody.value;
             const updatedTask = listItemTemplate(objOfTasks[id]);
             listContainer.replaceChild(updatedTask, parent);
+            form.reset();
         });
     }
 
