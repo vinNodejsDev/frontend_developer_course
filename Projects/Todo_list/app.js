@@ -36,6 +36,8 @@ const tasks = [
         acc[task._id] = task;
         return acc;
     }, {});
+    let lastSelectedTheme = localStorage.getItem('app_theme') || 'default';
+    console.log(lastSelectedTheme)
 
     const themes = {
         default: {
@@ -116,9 +118,11 @@ const tasks = [
 
 
     // Events
+    setTheme(lastSelectedTheme);
     renderAllTasks(objOfTasks);
     form.addEventListener("submit", onFormSubmitHandler);
     listContainer.addEventListener("click", onDeleteHandler);
+    listContainer.addEventListener("click", onEditHandler);
     themeSelect.addEventListener("change", onThemeSelect);
 
     // Functions
@@ -151,21 +155,37 @@ const tasks = [
         const span = document.createElement('span');
         span.textContent = title;
         span.style.fontWeight = "bold";
+        span.style.width = "100%";
+        span.style.marginTop = "10px";
+        span.style.fontSize = "1.2em";
 
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = "Delete task";
         deleteBtn.classList.add(
             'btn',
             'btn-danger',
-            'ml-auto',
+            'ml-2',
             'delete-btn'
         );
+
+        const editButton = document.createElement('button');
+        editButton.innerHTML = "<i class=\"fa fa-edit\" style='margin-right: 4px'></i>Edit";
+        editButton.classList.add(
+            'btn',
+            'btn-success',
+            'ml-auto',
+            'edit-btn'
+        );
+        // editButton.style.setProperty("padding", "20px")
+
+
         const article = document.createElement('p');
         article.textContent = body;
         article.classList.add('mt-2', 'w-100');
 
-        li.appendChild(span);
+        li.appendChild(editButton);
         li.appendChild(deleteBtn);
+        li.appendChild(span);
         li.appendChild(article);
 
         return li;
@@ -174,17 +194,21 @@ const tasks = [
     // Adding new task
     function onFormSubmitHandler(e) {
         e.preventDefault();
-        const titleValue = inputTitle.value;
-        const bodyValue = inputBody.value;
 
-        if(!titleValue && !bodyValue) {
-            alert('Please provide correct data in the form fields');
-            return;
+        if(e.target.querySelector('button').classList.contains('new_task')){
+            const titleValue = inputTitle.value;
+            const bodyValue = inputBody.value;
+
+            if(!titleValue && !bodyValue) {
+                alert('Please provide correct data in the form fields');
+                return;
+            }
+            const task = createNewTask(titleValue, bodyValue);
+            const listItem = listItemTemplate(task);
+            listContainer.insertAdjacentElement('afterbegin', listItem);
+            form.reset();
         }
-        const task = createNewTask(titleValue, bodyValue);
-        const listItem = listItemTemplate(task);
-        listContainer.insertAdjacentElement('afterbegin', listItem);
-        form.reset();
+
     }
 
     function createNewTask(title, body) {
@@ -224,18 +248,52 @@ const tasks = [
         el.remove();
     }
 
+    // Edit task
+    function onEditHandler(e) {
+        e.preventDefault();
+        if (e.target.classList.contains('edit-btn')) {
+            const parent = e.target.closest('[data-task-id]');
+            const id = parent.dataset.taskId;
+            editTask(id, parent);
+
+        }
+    }
+
+    function editTask(id, parent) {
+        const {title, body} = objOfTasks[id];
+        inputTitle.value = title;
+        inputBody.value = body;
+        const saveBtn = form.querySelector('button');
+        saveBtn.innerHTML = "<i class=\"fa fa-edit\" style='margin-right: 4px'></i>Save";
+        // saveBtn.classList.toggle('add_task');
+        saveBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            objOfTasks[id]['title'] = inputTitle.value;
+            objOfTasks[id]['body'] = inputBody.value;
+            const updatedTask = listItemTemplate(objOfTasks[id]);
+            listContainer.replaceChild(updatedTask, parent);
+        });
+    }
+
+
     // Theme changing stuff
     function onThemeSelect() {
         const selectedTheme = themeSelect.value;
-        const isConfirmed = confirm(`Are you sure you want to change theme to ${selectedTheme}`)
-        if (!isConfirmed) return;
+        const isConfirmed = confirm(`Are you sure you want to change theme to ${selectedTheme}`);
+        if (!isConfirmed) {
+            themeSelect.value = lastSelectedTheme;
+            return;
+        }
         setTheme(selectedTheme);
+        lastSelectedTheme = selectedTheme;
+        localStorage.setItem('app_theme', selectedTheme);
     }
 
     function setTheme(name) {
         const selectedThemeObj = themes[name];
+        themeSelect.value = name;
         Object.entries(selectedThemeObj).forEach(([key, value]) => {
-           // console.log(key, value);
             document.documentElement.style.setProperty(key, value);
         });
     }
