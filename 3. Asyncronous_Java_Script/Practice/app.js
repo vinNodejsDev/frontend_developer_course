@@ -97,9 +97,6 @@ function cardTemplate(user) {
     const company = document.createElement('div');
     company.innerHTML = '<hr/><h5>Company</h5>';
 
-    // name: "Romaguera-Crona"
-    // catchPhrase: "Multi-layered client-server neural-net"
-    // bs: "harness real-time e-markets"
     const companyName = document.createElement('p');
     companyName.innerHTML = `<b>Name:</b> ${user.company.name}`;
 
@@ -173,7 +170,6 @@ btnCreateUser.addEventListener("click", (e) => {
 btnSubmit.addEventListener("click", (e) => {
     e.preventDefault();
    const newUser = getFormData();
-   // const obj = {id: 21, name: 'SDfsdfsd', username: "sdfsdfsdfs"};
    createUser(newUser, (response) => {
         const card = cardTemplate(response);
         formDiv.insertAdjacentElement("afterend", card);
