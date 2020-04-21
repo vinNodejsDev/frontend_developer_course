@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Easy example</title>
+</head>
+<body>
+    <script type="text/javascript" language="JavaScript">
+        function makeRequest(url) {
+            let httpRequest = false;
+
+            if (window.XMLHttpRequest) {
+                httpRequest = new XMLHttpRequest();
+                if (httpRequest.overrideMimeType) {
+                    httpRequest.overrideMimeType('text/xml');
+                }
+            } else if (window.ActiveXObject) {
+                try {
+                    httpRequest = new ActiveXObject('Msxml2.XMLHTTP');
+                } catch (e) {
+                    try {
+                        httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                    } catch (e) {}
+                }
+            }
+
+            if (!httpRequest) {
+                alert('Request failed!')
+                return false;
+            }
+
+            httpRequest.onreadystatechange = function () {
+                alertContents(httpRequest);
+            }
+            httpRequest.open('GET', url, true);
+            httpRequest.send(null);
+        }
+
+        function alertContents(httpRequest) {
+
+            if (httpRequest.readyState === 4) {
+                if (httpRequest.status === 200) {
+                    alert(httpRequest.responseText);
+                } else {
+                    alert('The issue happened!')
+                }
+            }
+        }
+    </script>
+    <span
+        style="cursor:pointer; text-decoration: underline"
+        onclick="makeRequest('example.html')">
+        Make request
+    </span>
+</body>
+</html>

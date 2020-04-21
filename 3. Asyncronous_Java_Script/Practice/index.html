@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users page</title>
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+    />
+</head>
+<body>
+    <style>
+        .d-none {
+            display: none;
+        }
+        .clickable {
+            cursor: pointer;
+        }
+    </style>
+    <div class="container">
+        <h1>AJAX</h1>
+        <button class="btn btn-primary btn-get-users">Get Users</button>
+        <button class="btn btn-danger btn-add-user">Add new user</button>
+        <div class="container-fluid p-4 form-div d-none" style="border: 1px solid grey; margin: 15px 0; border-radius: 8px">
+            <h4>Add new user:</h4>
+
+
+            <form class="p-2" name="addUserForm">
+                <div class="form-group">
+                    <label for="name">Full name:</label>
+                    <input type="text" class="form-control" id="name" placeholder="Full Name">
+                </div>
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" class="form-control" id="username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="text" class="form-control" id="phone" placeholder="Phone">
+                </div>
+                <div class="form-group">
+                    <label for="website">Website:</label>
+                    <input type="text" class="form-control" id="website" placeholder="Website">
+                </div>
+
+                <hr><h5>Address</h5>
+                <div class="form-group">
+                    <label for="street">Street:</label>
+                    <input type="text" class="form-control" id="street" placeholder="Street">
+                </div>
+                <div class="form-group">
+                    <label for="suite">Suite:</label>
+                    <input type="text" class="form-control" id="suite" placeholder="Suite">
+                </div>
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" class="form-control" id="city" placeholder="City">
+                </div>
+                <div class="form-group">
+                    <label for="zipcode">ZIP code:</label>
+                    <input type="text" class="form-control" id="zipcode" placeholder="ZIP code">
+                </div>
+                <!--            company:-->
+                <!--            name: "Romaguera-Crona"-->
+                <!--            catchPhrase: "Multi-layered client-server neural-net"-->
+                <!--            bs: "harness real-time e-markets"-->
+                <hr><h5>Company information</h5>
+                <div class="form-group">
+                    <label for="companyName">Name:</label>
+                    <input type="text" class="form-control" id="companyName" placeholder="Street">
+                </div>
+                <div class="form-group">
+                    <label for="catchPhrase">Catch Phrase:</label>
+                    <input type="text" class="form-control" id="catchPhrase" placeholder="Catch Phrase">
+                </div>
+                <div class="form-group">
+                    <label for="bs">Business:</label>
+                    <input type="text" class="form-control" id="bs" placeholder="Business">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
