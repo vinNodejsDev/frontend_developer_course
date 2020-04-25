@@ -131,7 +131,7 @@ function getFormData() {
     const addUserForm = document.forms.addUserForm;
     return {
         id: Math.ceil(Math.random()*1000),
-        name: addUserForm.name.value || 'default',
+        name: addUserForm.name.value || 'default', 
         username: addUserForm.username.value || 'default',
         email: addUserForm.email.value || 'default@dfd.er',
         phone: addUserForm.phone.value || '000000000000',
@@ -178,3 +178,110 @@ btnSubmit.addEventListener("click", (e) => {
    formDiv.classList.toggle('d-none');
 });
 
+function myHttpRequest({ method, url } = {}, cb ) {
+    try {
+        const xhr = new XMLHttpRequest();
+
+        xhr.open(method, url);
+        xhr.addEventListener("load", () => {
+            if(Math.floor(xhr.status / 100) !== 2) {
+                cb(`Error. Status code: ${xhr.status}`, xhr);
+                return;
+            }
+
+            const response = JSON.parse(xhr.responseText);
+            cb(null, response);
+        });
+
+        xhr.addEventListener("error", (e) => {
+            console.log(e.error);
+        });
+
+        xhr.send();
+    } catch (e) {
+        cb(e);
+    }
+}
+
+// myHttpRequest({
+//     method:"GET",
+//     url:"https://jsonplaceholder.typicode.com/users"
+// }, (err, res) => {
+//     if(err) {
+//         console.log(err);
+//         return;
+//     }
+//     console.log(res)
+// });
+
+function http() {
+    return {
+        get(url, cb) {
+            try {
+            const xhr = new XMLHttpRequest();
+
+            xhr.open("GET", url);
+            xhr.addEventListener("load", () => {
+                if(Math.floor(xhr.status / 100) !== 2) {
+                    cb(`Error. Status code: ${xhr.status}`, xhr);
+                    return;
+                }
+
+                const response = JSON.parse(xhr.responseText);
+                cb(null, response);
+            });
+
+            xhr.addEventListener("error", (e) => {
+                console.log(e.error);
+            });
+
+            xhr.send();
+        } catch (e) {
+            cb(e);
+        }},
+        post(url, body, headers, cb) {
+            try {
+                const xhr = new XMLHttpRequest();
+
+                xhr.open("POST", url);
+                xhr.addEventListener("load", () => {
+                    if(Math.floor(xhr.status / 100) !== 2) {
+                        cb(`Error. Status code: ${xhr.status}`, xhr);
+                        return;
+                    }
+
+                    const response = JSON.parse(xhr.responseText);
+                    cb(null, response);
+                });
+
+                if(headers) {
+                    Object.entries(headers).forEach(([key, value]) => {
+                        xhr.setRequestHeader(key, value);
+                    });
+                }
+
+                xhr.addEventListener("error", (e) => {
+                    console.log(e.error);
+                });
+
+                xhr.send(JSON.stringify(body ));
+            } catch (e) {
+                cb(e);
+            }
+        }
+    };
+}
+
+const myHttp = http();
+myHttp.post(
+    "https://jsonplaceholder.typicode.com/users",
+    {
+    title: "dsfsdfsd",
+    age: 21,
+    userId: 324234
+    },
+    {"Content-Type": 'application/json'},
+    (err, res) => {
+        console.log(err, res);
+    }
+);
