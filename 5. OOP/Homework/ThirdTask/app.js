@@ -37,7 +37,7 @@ HomeFurniture.constructor = HomeFurniture;
 
 HomeFurniture.prototype.getInfo = function() {
     const resString = this.placeForComputer ? 'Cozzy furniture' : 'Usual furniture';
-    return `${this.name}, ${this.price}, ${resString}`
+    return `${this.name}, ${this.price}, ${re}`
 }
 
 const bed = new HomeFurniture('bed', 3290, true);
