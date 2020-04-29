@@ -1,27 +1,65 @@
 const btn = document.querySelector('button');
 const container = document.querySelector('.container');
 
-function getPosts(cb) {
-    const xhr = new XMLHttpRequest();
-    // console.log(xhr);
+function http() {
+    return {
+        get(url, cb) {
+            try {
+                const xhr = new XMLHttpRequest();
 
-    xhr.open("GET", "https://jsonplaceholder.typicode.com/posts");
+                xhr.open("GET", url);
+                xhr.addEventListener("load", () => {
+                    if(Math.floor(xhr.status / 100) !== 2) {
+                        cb(`Error. Status code: ${xhr.status}`, xhr);
+                        return;
+                    }
 
-    xhr.addEventListener("load", () => {
-        // console.log(xhr.responseText);
-        const response = JSON.parse(xhr.responseText);
-        // console.log(response);
-        cb(response);
-    });
+                    const response = JSON.parse(xhr.responseText);
+                    cb(null, response);
+                });
 
-    xhr.addEventListener("error", () => {
-        console.log("error")
-    });
+                xhr.addEventListener("error", (e) => {
+                    console.log(e.error);
+                });
 
-    xhr.send();
-    // console.log(xhr.responseText)
+                xhr.send();
+            } catch (e) {
+                cb(e);
+            }},
+        post(url, body, headers, cb) {
+            try {
+                const xhr = new XMLHttpRequest();
+
+                xhr.open("POST", url);
+                xhr.addEventListener("load", () => {
+                    if(Math.floor(xhr.status / 100) !== 2) {
+                        cb(`Error. Status code: ${xhr.status}`, xhr);
+                        return;
+                    }
+
+                    const response = JSON.parse(xhr.responseText);
+                    cb(null, response);
+                });
+
+                if(headers) {
+                    Object.entries(headers).forEach(([key, value]) => {
+                        xhr.setRequestHeader(key, value);
+                    });
+                }
+
+                xhr.addEventListener("error", (e) => {
+                    console.log(e.error);
+                });
+
+                xhr.send(JSON.stringify(body ));
+            } catch (e) {
+                cb(e);
+            }
+        }
+    };
 }
 
+const myHttp = http();
 function renderPosts(response) {
         const fragment = document.createDocumentFragment();
         response.forEach((post) => {
@@ -45,7 +83,49 @@ function renderPosts(response) {
         container.appendChild(fragment);
 }
 
+function getPost(id) {
+    return new Promise((resolve, reject) => {
+        myHttp.get(`https://jsonplaceholder.typicode.com/posts/${id}`, (err, res) => {
+            if (err) {
+                reject(err);
+            }
+            resolve(res);
+        });
+    })
+}
+
+function getPostComments(post) {
+    const { id } = post;
+    return new Promise((resolve, reject) => {
+        myHttp.get(`https://jsonplaceholder.typicode.com/comments?postId=${id}`, (err, res) => {
+            if (err) {
+                reject(err);
+            }
+            resolve({ post, comments: res});
+        });
+    })
+}
+
+function getUserCreatedPost (data) {
+    const { post: {userId} } = data;
+    console.log(userId);
+
+    return new Promise((resolve, reject) => {
+        myHttp.get(`https://jsonplaceholder.typicode.com/users/${userId} `, (err, res) => {
+            if (err) {
+                reject(err);
+            }
+            resolve({ ...data, user: res });
+        });
+    })
+}
+
 btn.addEventListener("click", e => {
-    getPosts(renderPosts);
+    getPost(renderPosts);
 });
 
+getPost(32)
+    .then(post => getPostComments(post ))
+    .then(data  => getUserCreatedPost(data))
+    .then(fullData => console.log(fullData))
+    .catch(err => console.log(err));
