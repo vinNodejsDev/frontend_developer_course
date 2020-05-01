@@ -1,5 +1,4 @@
-const btn = document.querySelector('.btn-get-post');
-const btnAddPost = document.querySelector('.btn-add-post');
+const btn = document.querySelector('button');
 const container = document.querySelector('.container');
 
 function getPosts(cb) {
@@ -21,28 +20,6 @@ function getPosts(cb) {
 
     xhr.send();
     // console.log(xhr.responseText)
-}
-
-function createPost(body, cb) {
-    const xhr = new XMLHttpRequest();
-    // console.log(xhr);
-
-    xhr.open("POST", "https://jsonplaceholder.typicode.com/posts");
-
-    xhr.addEventListener("load", () => {
-        // console.log(xhr.responseText);
-        const response = JSON.parse(xhr.responseText);
-        // console.log(response);
-        cb(response);
-    });
-
-    xhr.setRequestHeader("Content-type", "application/json")
-
-    xhr.addEventListener("error", () => {
-        console.log("error")
-    });
-
-    xhr.send(JSON.stringify(body));
 }
 
 function renderPosts(response) {
@@ -72,13 +49,3 @@ btn.addEventListener("click", e => {
     getPosts(renderPosts);
 });
 
-btnAddPost.addEventListener("click", (e) => {
-    const newPost = {
-        title: 'foo',
-        body: 'bar',
-        userId: 1,
-    };
-    createPost(newPost, (response) => {
-        console.log(response);
-    });
-});
