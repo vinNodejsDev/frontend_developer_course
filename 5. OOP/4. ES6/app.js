@@ -50,7 +50,7 @@ User.prototype.sayHello = function() {
 
 const user1 = new User('Vitalii', 'Kushnir');
 
-function Customer(nam e, lastname, membership) {
+function Customer(name, lastname, membership) {
      User.apply(this, arguments);
 
      this.membership = membership;
@@ -65,3 +65,35 @@ Customer.prototype.getMembership = function () {
 }
 
 const customer1 = new Customer('Petro', 'Petrov', 'Vip ')
+
+//ES6
+const methodName = 'setPrice2';
+class ProductES {
+    constructor (brand, price, discount) {
+         this._brand = brand;
+         this.price = price;
+         this.discount = discount;
+    }
+
+    get brand() {
+        return this._brand
+    }
+
+    set brand(name) {
+        this._brand = name;
+    }
+
+    getDiscountedPrice () {
+        return this.price * (100 - this.discount) /  100
+    }
+
+    [methodName](newPrice) {
+        this.price = newPrice
+    }
+
+    static plus(x, y) {
+        return x + y
+    }
+}
+
+const prodX = new ProductES('Tesla', 100000, 10)
