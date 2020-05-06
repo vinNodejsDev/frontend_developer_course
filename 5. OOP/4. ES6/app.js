@@ -96,4 +96,29 @@ class ProductES {
     }
 }
 
-const prodX = new ProductES('Tesla', 100000, 10)
+const prodX = new ProductES('Tesla', 100000, 10);
+
+class UserES {
+    constructor(name, lastname) {
+        this.name = name;
+        this.lastname = lastname;
+    }
+
+    getFullName() {
+        return `${this.name} ${this.lastname}`
+    }
+}
+
+class CustomerES extends UserES {
+     constructor(name, lastname, membership) {
+         super(name, lastname);
+         this.membership = membership; 
+     }
+
+     getFullName() {
+         const parentRes = super.getFullName();
+         return `Full name: ${parentRes}, membership: ${this.membership}`
+     }
+}
+
+const customerES = new CustomerES('Petro', 'Pron', 'VIP')

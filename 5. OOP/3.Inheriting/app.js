@@ -50,7 +50,7 @@ User.prototype.sayHello = function() {
 
 const user1 = new User('Vitalii', 'Kushnir');
 
-function Customer(nam e, lastname, membership) {
+function Customer(name, lastname, membership) {
      User.apply(this, arguments);
 
      this.membership = membership;
