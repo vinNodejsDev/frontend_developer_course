@@ -1,41 +1,54 @@
-// Создайте класс “Здание” (пусть у него будет имя, количество этажей, метод “получить количество этажей” и метод “установить количество этажей”).
-// Создайте наследников этого класса:
-// классы “Жилой дом” и “Торговый центр”. Используйте функциональное наследование 
+// Создать класс калькулятора который будет принимать стартовое значение и у него будут методы сложить, вычесть, умножить , разделить. Также у него должны быть геттер и сеттер для получения и установки текущего числа с которым производятся вычисления.
 
-
-function Building(name, amountOfStages) {
-    this.name = name;
-    this.amountOfStages = amountOfStages;
-    this.getAmountOfStages = function () {
-        return this.amountOfStages;
-    };
-    this.setAmountOfStages = function (newAmount) {
-        this.amountOfStages = newAmount;
+class Calculator {
+    constructor(initValue) {
+        this._currentValue = initValue;
     }
-}
 
-const build1 = new Building('Tower', 82)
-
-// У жилого дома появится свойство “количество квартир на этаже”, а метод “получить количество этажей” должен вернуть объект вида {этажи: 5, всегоКвартир: 5 * количествоКвартир}
-
-function LivingBuilds(name, amountOfStages, amountOfFlats) {
-    Building.apply(this, arguments);
-    this.amountOfFlats = amountOfFlats;
-    this.getAmountOfStages = function() {
-        return {stages: this.amountOfStages, amountOfFlats: this.amountOfFlats};
+    get currentValue () {
+        return this._currentValue;
     }
-}
 
-const apartments = new LivingBuilds('Luxury District', 32, 10);
-
-// У торгового центра появится свойство “количество магазинов на этаже”, а метод “получить количество этажей” должен вернуть объект вида {этажи: 3, всегоМагазинов: 3 * количествоМагазинов}
-// От каждого класса создать экземпляр (дом, торговый центр)
-function Mall(name, amountOfStages, amountOfStores) {
-    Building.apply(this, arguments);
-    this.amountOfStores = amountOfStores;
-    this.getAmountOfStages = function () {
-        return {stages: this.amountOfStages, amountOfStores: this.amountOfStores};
+    set currentValue (value) {
+        console.log(typeof value)
+        if(typeof value === 'number') {
+            this._currentValue = value;
+        } else {
+            console.log('please provide numbers only')
+        }
     }
-}
 
-const CracowMall = new Mall('Krakow', 5, 50);
+    add (value) {
+        if(typeof value === 'number') {
+            this._currentValue += value;
+        } else {
+            console.log('please provide numbers only')
+        }
+    }
+
+    substract (value) {
+        if(typeof value === 'number') {
+            this._currentValue -= value;
+        } else {
+            console.log('please provide numbers only')
+        }
+    }
+
+    multiply (value) {
+        if(typeof value === 'number') {
+            this._currentValue *= value;
+        } else {
+            console.log('please provide numbers only')
+        }
+    }
+
+    divide (value) {
+        if(typeof value === 'number') {
+            this._currentValue /= value;
+        } else {
+            console.log('please provide numbers only')
+        }
+    }
+
+
+}
